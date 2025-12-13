@@ -42,9 +42,13 @@ int main(){
 
     int twoD[2][2] = {{1,2},{3,4}}; 
     int (*f)[2] = twoD;
-    printf("\n%d", *f); // Address of [0][0]
-    printf("\n%d\n", *(*f)); // Value of [0][0]
+    printf("\n%d", f); // Address of [0], why? f --> twoD[0]
+    printf("\n%d", f+1); // You can see it adds 8 bytes[2 elements] instead of 4 bytes[1 elements] i.e f+1 gives address of 2nd Row not 2nd Element
 
+    printf("\n%d", *f); // Address of [0][0], why? *f --> twoD[0][0]
+    printf("\n%d", *f+1); // Address of 2nd Element, adds only 4 to initial address
+    printf("\n%d\n", **f); // Value of [0][0]
 
+    printf("Address of [1][0] Using 1st Row: %d", *(f+1));
     return 0;
 }
