@@ -1,5 +1,20 @@
 #include <stdio.h>
 
+int Funtion(int k, int l){
+    return k*l;
+}
+void functionOne(){
+    printf("\nThis fucntion will be passed into another function using pointers!");
+}
+void functionTwo(void (*fnptr)()){
+    fnptr();
+}
+int *sum(int* a, int* b){
+    int x = *a,y= *b;
+    static int c = 0; // has to be initialized with constant
+    c =  x + y;// c will be disposed once funtion has been executed, Using static to hold value even after execution
+    return &c;
+}
 int main(){
     int a;
     int *b;
@@ -42,9 +57,28 @@ int main(){
 
     int twoD[2][2] = {{1,2},{3,4}}; 
     int (*f)[2] = twoD;
-    printf("\n%d", *f); // Address of [0][0]
-    printf("\n%d\n", *(*f)); // Value of [0][0]
+    printf("\n%d", f); // Address of [0], why? f --> twoD[0]
+    printf("\n%d", f+1); // You can see it adds 8 bytes[2 elements] instead of 4 bytes[1 elements] i.e f+1 gives address of 2nd Row not 2nd Element
 
+    printf("\n%d", *f); // Address of [0][0], why? *f --> twoD[0][0]
+    printf("\n%d", *f+1); // Address of 2nd Element, adds only 4 to initial address
+    printf("\n%d\n", **f); // Value of [0][0]
+
+    printf("Address of [1][0] Using 1st Row: %d", *(f+1));
+    
+    int *h = sum(b,b);
+    printf("\nAddress: %zu\tValue: %d",h,(*h));
+
+    int (*i)(int,int);
+    i = &Funtion; // i = Function; also Works
+    printf("\n%d OR %d", (*i)(4,6), i(6,4)); 
+
+    void (*fnTwo)(void(*)()); // creating a function in main
+    fnTwo = functionTwo; // address of functionTwo passed to function in main
+    fnTwo(functionOne); // called function in main with a function in arguement
+    
+    // can be directly called too! 
+    functionTwo(functionOne);
 
     return 0;
 }
