@@ -80,5 +80,6 @@ int main(){
     // can be directly called too! 
     functionTwo(functionOne);
 
+    printf("Address of [1][0] Using 1st Row: %d", *(f+1));
     return 0;
 }
